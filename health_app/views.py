@@ -35,9 +35,6 @@ def display_chart_data(request):
     return render(request, 'health_app/chart_data_view.html', {'health_data': health_data})
 
 
-def index(request):
-    return render(request,'health_app/index.html')
-
 def add_temp(request):
     return render(request,'health_app/add_temperature.html')
 
