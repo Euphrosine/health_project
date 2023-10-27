@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h4>Health Data</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>BIM</th>
+                <th>Temperature</th>
+                <th>Strick</th>
+                <th>BP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in health_data %}
+                <tr>
+                    <td>{{ entry.timestamp }}</td>
+                    <td>{{ entry.bim }}</td>
+                    <td>{{ entry.temperature }}</td>
+                    <td>{{ entry.strick }}</td>
+                    <td>{{ entry.bp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table><br><br>
+    <h4>Health Chart</h4>
+    <canvas id="healthChart" width="600" height="300"></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('healthChart').getContext('2d');
+    
+            var data = {
+                labels: [{% for entry in health_data %}'{{ entry.timestamp }}',{% endfor %}],
+                datasets: [
+                    {
+                        label: 'BIM',
+                        data: [{% for entry in health_data %}{{ entry.bim }},{% endfor %}],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Temperature',
+                        data: [{% for entry in health_data %}{{ entry.temperature }},{% endfor %}],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Strick',
+                        data: [{% for entry in health_data %}{{ entry.strick }},{% endfor %}],
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'BP',
+                        data: [{% for entry in health_data %}{{ entry.bp }},{% endfor %}],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }
+                ]
+            };
+    
+            var options = {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+    
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: options
+            });
+        });
+    </script>
+    
+</div>
+{% endblock %}
