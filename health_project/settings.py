@@ -78,11 +78,21 @@ WSGI_APPLICATION = 'health_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://postgres:a1DCAc*EE1B53cFBecDdBGA52*c2Ac5F@roundhouse.proxy.rlwy.net:35521/railway')
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'healthproject',
+        'USER': 'admin',
+        'PASSWORD': 'admin123',
+        'HOST': 'mysql-153418-0.cloudclusters.net',
+        'PORT': '19069',
+
+    }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.config(default='postgres://postgres:a1DCAc*EE1B53cFBecDdBGA52*c2Ac5F@roundhouse.proxy.rlwy.net:35521/railway')
+# }
 
 
 # Password validation
